@@ -22,19 +22,19 @@ export default function Navbar() {
 
       {/* Links on the right */}
       <div style={{ display: 'flex', gap: '20px' }}>
-        <Link href="/dashboard" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
-          Features
+        <Link href="/lessons" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
+          Lessons
         </Link>
-        <Link href="/properties/" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
-          Impact
+        <Link href="/progress/" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
+          Progress
         </Link>
-        <Link href="/googlereviews" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
-          How it works 
+        <Link href="/teacher" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
+          Teacher
         </Link>
-         <Link href="/googlereviews" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
+         <Link href="/contact" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
           Contact
         </Link>
-         <Link href="/googlereviews" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
+         <Link href="/getStarted" style={{ textDecoration: 'none', fontWeight: 'bold', color: '#333' }}>
           Get started
         </Link>
       </div>
