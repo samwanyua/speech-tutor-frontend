@@ -54,7 +54,8 @@ export default function ProfilePage() {
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '85vh',
-        background: 'linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%)',
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        backdropFilter: 'blur(6px)',
         p: 2,
       }}
     >
@@ -63,7 +64,7 @@ export default function ProfilePage() {
         sx={{
           width: 600,
           borderRadius: 4,
-          backgroundColor: 'rgba(255, 255, 255, 0.85)',
+          backgroundColor: 'rgba(255, 255, 255, 0.15)',
           backdropFilter: 'blur(8px)',
           p: 3,
         }}
