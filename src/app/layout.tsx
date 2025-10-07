@@ -5,6 +5,7 @@ import MuiGlobalStyles from "@mui/material/GlobalStyles";
 import { ReactNode } from "react";
 import { poppins } from "./fonts"; 
 import Navbar from "@/components/Navbar";
+import { AuthProvider } from "@/context/AuthContext";
 
 const theme = createTheme({
   palette: {
@@ -46,8 +47,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               },
             }}
           />
-          <Navbar />
-          <div style={{ marginTop: 60 }}>{children}</div>
+           <AuthProvider>
+            <Navbar />
+            <div style={{ marginTop: 60 }}>{children}</div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

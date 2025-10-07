@@ -3,53 +3,52 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Box from '@mui/material/Box';
+import { useRouter } from 'next/navigation';
+import { AppBar, Toolbar, IconButton, Typography, Button, Menu, MenuItem, Box } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Navbar(): JSX.Element {
+  const router = useRouter();
+  const { user, logout } = useAuth(); // <-- from AuthContext
   const [lessonsAnchor, setLessonsAnchor] = useState<null | HTMLElement>(null);
 
-  const openLessonsMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setLessonsAnchor(event.currentTarget);
-  };
+  const openLessonsMenu = (event: React.MouseEvent<HTMLElement>) => setLessonsAnchor(event.currentTarget);
+  const closeLessonsMenu = () => setLessonsAnchor(null);
 
-  const closeLessonsMenu = () => {
-    setLessonsAnchor(null);
+  const handleLogout = () => {
+    logout();
+    router.push('/auth/login');
   };
 
   return (
     <AppBar
-      position="static"
+      position="sticky"
       elevation={1}
       sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0.3)', 
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
         backdropFilter: 'blur(6px)',
         color: '#222',
       }}
     >
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: 64 }}>
-        {/* Left: Brand (Home icon + SautiCare) */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+        
+        {/* === Left: Brand (Home + Title) === */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'black' }}>
-            {/* <HomeIcon fontSize="large" aria-hidden /> */}
-            <Typography variant="h6" component="span" sx={{ ml: 0.5, fontWeight: 700 }}>
+            <HomeIcon sx={{ mr: 0.5 }} />
+            <Typography variant="h6" component="span" sx={{ fontWeight: 700 }}>
               SautiCare
             </Typography>
           </Link>
         </Box>
 
-        {/* Right: Nav actions (max ~4 items) */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'black'}}>
-          {/* Lessons menu (Easy / Medium / Hard) */}
-         <Button
+        {/* === Right: Nav Actions === */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          
+          {/* Lessons Dropdown */}
+          <Button
             onClick={openLessonsMenu}
             aria-controls={lessonsAnchor ? 'lessons-menu' : undefined}
             aria-haspopup="true"
@@ -57,7 +56,7 @@ export default function Navbar(): JSX.Element {
             sx={{
               textTransform: 'none',
               fontWeight: 700,
-              color: '#000', 
+              color: '#000',
               '&:hover': {
                 backgroundColor: 'rgba(71, 70, 70, 0.04)',
                 color: '#000',
@@ -66,7 +65,6 @@ export default function Navbar(): JSX.Element {
           >
             Lessons
           </Button>
-
 
           <Menu
             id="lessons-menu"
@@ -77,21 +75,16 @@ export default function Navbar(): JSX.Element {
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             keepMounted
           >
-            <MenuItem onClick={closeLessonsMenu}>
-              <Link href="/lessons/easy" style={{ textDecoration: 'none', color: 'black' }}>
-                Easy
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={closeLessonsMenu}>
-              <Link href="/lessons/medium" style={{ textDecoration: 'none', color: 'black' }}>
-                Medium
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={closeLessonsMenu}>
-              <Link href="/lessons/hard" style={{ textDecoration: 'none', color: 'black' }}>
-                Hard
-              </Link>
-            </MenuItem>
+            {['easy', 'medium', 'hard'].map((level) => (
+              <MenuItem key={level} onClick={closeLessonsMenu}>
+                <Link
+                  href={`/lessons/${level}`}
+                  style={{ textDecoration: 'none', color: 'black', width: '100%' }}
+                >
+                  {level.charAt(0).toUpperCase() + level.slice(1)}
+                </Link>
+              </MenuItem>
+            ))}
           </Menu>
 
           {/* Profile */}
@@ -99,16 +92,55 @@ export default function Navbar(): JSX.Element {
             <Button sx={{ textTransform: 'none', fontWeight: 700, color: '#000' }}>Profile</Button>
           </Link>
 
-          {/* Dashboard (teacher/guardian) */}
-          <Link href="/dashboard" style={{ textDecoration: 'none' }}>
-            <Button sx={{ textTransform: 'none', fontWeight: 700, color: '#000',  }}>Dashboard</Button>
-          </Link>
+          {/* Conditional Auth Buttons */}
+          {user ? (
+            <>
+              <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+                <Button sx={{ textTransform: 'none', fontWeight: 700, color: '#000' }}>Dashboard</Button>
+              </Link>
+              <Button
+                onClick={handleLogout}
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 700,
+                  color: '#000',
+                  '&:hover': { backgroundColor: 'rgba(0,0,0,0.05)' },
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link href="/auth/login" style={{ textDecoration: 'none' }}>
+                <Button sx={{ textTransform: 'none', fontWeight: 700, color: '#000' }}>Login</Button>
+              </Link>
+              <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    textTransform: 'none',
+                    fontWeight: 700,
+                    borderRadius: '20px',
+                    borderColor: '#000',
+                    color: '#000',
+                    '&:hover': {
+                      backgroundColor: 'rgba(0,0,0,0.05)',
+                      borderColor: '#000',
+                    },
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
 
-          {/* Small-screen fallback: optional hamburger (keeps UI stable on tiny screens) */}
+          {/* Mobile Menu (optional) */}
           <IconButton
             edge="end"
             aria-label="menu"
-            sx={{ display: { xs: 'inline-flex', sm: 'none' }, ml: 1 }}
+            sx={{ display: { xs: 'inline-flex', sm: 'none' }, ml: 1, color: '#000' }}
           >
             <MenuIcon />
           </IconButton>
