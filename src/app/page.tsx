@@ -122,7 +122,7 @@ export default function Home() {
           spacing={4}
           justifyContent="center"
           alignItems="center"
-          sx={{ maxWidth: 1000 }} // keeps layout tight & centered
+          sx={{ maxWidth: 1200 }} // keeps layout tight & centered
         >
           {[
             {
