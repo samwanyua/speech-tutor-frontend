@@ -30,7 +30,7 @@ export default function Navbar(): JSX.Element {
       position="static"
       elevation={1}
       sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0.85)', 
+        backgroundColor: 'rgba(255, 255, 255, 0.3)', 
         backdropFilter: 'blur(6px)',
         color: '#222',
       }}
