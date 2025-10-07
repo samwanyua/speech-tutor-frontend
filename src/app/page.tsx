@@ -230,9 +230,15 @@ export default function Home() {
 
       {/* ================= FOOTER ================= */}
       <Divider sx={{ my: 6 }} />
-      <Typography variant="body2" align="center" sx={{ color: '#666', mb: 2 }}>
-        © {new Date().getFullYear()} SautiCare · Empowering Voices for a Healthier Future
-      </Typography>
+     <Box sx={{ textAlign: 'center', mt: 6, mb: 2 }}>
+        <Typography variant="body2" sx={{ color: '#666' }}>
+          © {new Date().getFullYear()} SautiCare · Empowering Voices for a Healthier Future
+        </Typography>
+        <Typography variant="body2" sx={{ color: '#777', mt: 0.5 }}>
+          Made by <strong>Samuel Wanyua</strong>
+        </Typography>
+      </Box>
+
     </Box>
   );
 }
