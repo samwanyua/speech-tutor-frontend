@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 const theme = createTheme({
   palette: {
     mode: "light",
-    primary: { main: "#1976d2" },
+    primary: { main: "#000" },
     secondary: { main: "#9c27b0" },
   },
   typography: {
