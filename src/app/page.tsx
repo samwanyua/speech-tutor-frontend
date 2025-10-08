@@ -231,10 +231,10 @@ export default function Home() {
       {/* ================= FOOTER ================= */}
       <Divider sx={{ my: 6 }} />
      <Box sx={{ textAlign: 'center', mt: 6, mb: 2 }}>
-        <Typography variant="body2" sx={{ color: '#666' }}>
-          © {new Date().getFullYear()} SautiCare · Empowering Speech, Inspiring Growth
+        <Typography variant="body2" sx={{ color: 'primary' }}>
+          © {new Date().getFullYear()} <strong>SautiCare</strong> · Empowering Speech, Inspiring Growth
         </Typography>
-        <Typography variant="body2" sx={{ color: '#777', mt: 0.5 }}>
+        <Typography variant="body2" sx={{ color: 'primary', mt: 0.5 }}>
           Made by{' '}
           <a
             href="https://www.datascienceportfol.io/samuelwanyua"
