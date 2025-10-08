@@ -1,4 +1,4 @@
-#  SautiCare – Speak Well, Live Well
+#  SautiCare – Empowering Speech, Inspiring Growth
 
 SautiCare is an **inclusive speech tutor app** designed for learners with speech impairments in Kenya.  
 It combines **Automatic Speech Recognition (ASR)** and **Text-to-Speech (TTS)** technologies to guide learners through interactive **nutrition and hygiene micro-lessons**, helping them build both **speech clarity** and **health literacy**.  

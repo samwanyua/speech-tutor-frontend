@@ -232,7 +232,7 @@ export default function Home() {
       <Divider sx={{ my: 6 }} />
      <Box sx={{ textAlign: 'center', mt: 6, mb: 2 }}>
         <Typography variant="body2" sx={{ color: '#666' }}>
-          © {new Date().getFullYear()} SautiCare · Empowering Voices for a Healthier Future
+          © {new Date().getFullYear()} SautiCare · Empowering Speech, Inspiring Growth
         </Typography>
         <Typography variant="body2" sx={{ color: '#777', mt: 0.5 }}>
           Made by{' '}
