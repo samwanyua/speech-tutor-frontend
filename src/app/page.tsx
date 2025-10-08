@@ -80,7 +80,7 @@ export default function Home() {
             }}
           >
             <Image
-              src="/images/home_page_ill-removebg-preview.png"
+              src="/images/slt-1.png"
               alt="Dashboard Illustration"
               width={420}
               height={320}
@@ -146,13 +146,13 @@ export default function Home() {
               link: '/dashboard',
               button: 'View Dashboard',
             },
-            {
-              title: 'Offline Mode',
-              description:
-                'Keep learning even without internet access. Your progress will sync automatically once reconnected.',
-              link: '/offline',
-              button: 'Go Offline',
-            },
+            // {
+            //   title: 'Offline Mode',
+            //   description:
+            //     'Keep learning even without internet access. Your progress will sync automatically once reconnected.',
+            //   link: '/offline',
+            //   button: 'Go Offline',
+            // },
           ].map((card, index) => (
             <Grid
               key={index}
