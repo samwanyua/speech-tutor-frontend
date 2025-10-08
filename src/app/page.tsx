@@ -235,8 +235,17 @@ export default function Home() {
           © {new Date().getFullYear()} SautiCare · Empowering Voices for a Healthier Future
         </Typography>
         <Typography variant="body2" sx={{ color: '#777', mt: 0.5 }}>
-          Made by <strong>Samuel Wanyua</strong>
+          Made by{' '}
+          <a
+            href="https://www.datascienceportfol.io/samuelwanyua"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#000', fontWeight: 600, textDecoration: 'none' }}
+          >
+            Samuel Wanyua
+          </a>
         </Typography>
+
       </Box>
 
     </Box>
