@@ -1,4 +1,3 @@
-// src/app/lessons/easy.tsx
 'use client';
 import LessonTemplate from '@/components/LessonTemplate';
 

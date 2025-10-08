@@ -92,14 +92,17 @@ export default function Navbar(): JSX.Element {
             <Button sx={{ textTransform: 'none', fontWeight: 700, color: '#000' }}>Profile</Button>
           </Link>
 
-          {/* Conditional Auth Buttons */}
-          {user ? (
-            <>
-              <Link href="/dashboard" style={{ textDecoration: 'none' }}>
-                <Button sx={{ textTransform: 'none', fontWeight: 700, color: '#000' }}>Dashboard</Button>
-              </Link>
+          {/* Dashboard (teacher/guardian) */}
+          <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+            <Button sx={{ textTransform: 'none', fontWeight: 700 }}>Dashboard</Button>
+          </Link>
+
+
+         {/* Conditional Auth Buttons */}
+        {user ? (
+          <>
+            <Link href="/dashboard" style={{ textDecoration: 'none' }}>
               <Button
-                onClick={handleLogout}
                 sx={{
                   textTransform: 'none',
                   fontWeight: 700,
@@ -107,34 +110,44 @@ export default function Navbar(): JSX.Element {
                   '&:hover': { backgroundColor: 'rgba(0,0,0,0.05)' },
                 }}
               >
-                Logout
+                Dashboard
               </Button>
-            </>
-          ) : (
-            <>
-              <Link href="/auth/login" style={{ textDecoration: 'none' }}>
-                <Button sx={{ textTransform: 'none', fontWeight: 700, color: '#000' }}>Login</Button>
-              </Link>
-              <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    textTransform: 'none',
-                    fontWeight: 700,
-                    borderRadius: '20px',
+            </Link>
+
+            <Button
+              onClick={handleLogout}
+              sx={{
+                textTransform: 'none',
+                fontWeight: 700,
+                color: '#000',
+                '&:hover': { backgroundColor: 'rgba(0,0,0,0.05)' },
+              }}
+            >
+              Logout
+            </Button>
+          </>
+        ) : (
+          <>
+            <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
+              <Button
+                variant="outlined"
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 700,
+                  borderRadius: '20px',
+                  borderColor: '#000',
+                  color: '#000',
+                  '&:hover': {
+                    backgroundColor: 'rgba(0,0,0,0.05)',
                     borderColor: '#000',
-                    color: '#000',
-                    '&:hover': {
-                      backgroundColor: 'rgba(0,0,0,0.05)',
-                      borderColor: '#000',
-                    },
-                  }}
-                >
-                  Sign Up
-                </Button>
-              </Link>
-            </>
-          )}
+                  },
+                }}
+              >
+                Sign Up
+              </Button>
+            </Link>
+          </>
+        )}
 
           {/* Mobile Menu (optional) */}
           <IconButton

@@ -41,8 +41,10 @@ export default function LessonTemplate({ level, phrase }: LessonTemplateProps) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '80vh',
-        background: 'linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%)',
+        minHeight: '100vh',
+        backgroundColor: 'rgba(255, 255, 255, 0.3)', // transparent white card
+        backdropFilter: 'blur(8px)',
+        
         p: 2,
       }}
     >
@@ -51,7 +53,7 @@ export default function LessonTemplate({ level, phrase }: LessonTemplateProps) {
         sx={{
           width: 600,
           borderRadius: 4,
-          backgroundColor: 'rgba(255, 255, 255, 0.75)',
+          backgroundColor: 'rgba(255, 255, 255, 0.3)',
           backdropFilter: 'blur(8px)',
           textAlign: 'center',
           p: 3,

@@ -1,4 +1,3 @@
-// src/app/profile.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -25,8 +24,6 @@ export default function ProfilePage() {
 
   const handleRecord = () => {
     setRecording(true);
-    console.log('Recording baseline sample...');
-    // Later: integrate with backend or Web Audio API
     setTimeout(() => {
       setRecording(false);
       setSampleSaved(true);
@@ -37,7 +34,6 @@ export default function ProfilePage() {
     const learnerProfile = { name, age, language, baselineRecorded: sampleSaved };
     console.log('Saving learner profile:', learnerProfile);
     alert('Profile saved successfully!');
-    // Later: send POST request to FastAPI backend
   };
 
   const handleReset = () => {
@@ -53,19 +49,23 @@ export default function ProfilePage() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '85vh',
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        backdropFilter: 'blur(6px)',
+        minHeight: 'calc(100vh - 60px)', 
+        backgroundColor: 'rgba(255, 255, 255, 0)', 
+        backdropFilter: 'blur(8px)',
         p: 2,
+        zIndex: 1,
+        position: 'relative',
       }}
     >
       <Card
-        elevation={3}
+        elevation={5}
         sx={{
-          width: 600,
+          width: '100%',
+          maxWidth: 600,
           borderRadius: 4,
-          backgroundColor: 'rgba(255, 255, 255, 0.15)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(255, 255, 255, 0.3)', // ✅ subtle frosted glass
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
           p: 3,
         }}
       >
@@ -73,15 +73,13 @@ export default function ProfilePage() {
           <Typography
             variant="h4"
             fontWeight={700}
-            gutterBottom
             textAlign="center"
-            sx={{ color: '#333', mb: 3 }}
+            sx={{ mb: 3, color: '#1a1a1a' }}
           >
             Learner Profile Setup
           </Typography>
 
           <Stack spacing={3}>
-            {/* Name Input */}
             <TextField
               label="Learner Name"
               value={name}
@@ -90,7 +88,6 @@ export default function ProfilePage() {
               required
             />
 
-            {/* Age Input */}
             <TextField
               label="Age"
               type="number"
@@ -100,7 +97,6 @@ export default function ProfilePage() {
               required
             />
 
-            {/* Language Selection */}
             <TextField
               select
               label="Preferred Language"
@@ -112,7 +108,6 @@ export default function ProfilePage() {
               <MenuItem value="swahili">Swahili</MenuItem>
             </TextField>
 
-            {/* Record Baseline Speech */}
             <Button
               variant="contained"
               color={recording ? 'secondary' : 'primary'}
@@ -128,7 +123,6 @@ export default function ProfilePage() {
                 : 'Record Baseline Sample'}
             </Button>
 
-            {/* Save & Reset */}
             <Stack direction="row" spacing={2} justifyContent="center">
               <Button
                 variant="contained"
@@ -153,7 +147,6 @@ export default function ProfilePage() {
             </Stack>
           </Stack>
 
-          {/* Confirmation */}
           {sampleSaved && (
             <Typography
               variant="body2"
