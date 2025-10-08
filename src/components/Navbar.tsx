@@ -35,14 +35,37 @@ export default function Navbar(): JSX.Element {
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: 64 }}>
         
         {/* === Left: Brand (Home + Title) === */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'black' }}>
-            <HomeIcon sx={{ mr: 0.5 }} />
-            <Typography variant="h6" component="span" sx={{ fontWeight: 700 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: { xs: 0.5, sm: 1, md: 1.5 }, // smaller gaps on small screens
+          }}
+        >
+          <Link
+            href="/"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: 'black',
+            }}
+          >
+            
+            <Typography
+              variant="h6"
+              component="span"
+              sx={{
+                fontWeight: 700,
+                fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' }, // responsive text size
+                whiteSpace: 'nowrap', // prevent wrapping
+              }}
+            >
               SautiCare
             </Typography>
           </Link>
         </Box>
+
 
         {/* === Right: Nav Actions === */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -130,13 +153,12 @@ export default function Navbar(): JSX.Element {
           <>
             <Link href="/auth/signup" style={{ textDecoration: 'none' }}>
               <Button
-                variant="outlined"
+                variant="contained"
                 sx={{
                   textTransform: 'none',
                   fontWeight: 700,
                   borderRadius: '20px',
-                  borderColor: '#000',
-                  color: '#000',
+                  color: '#FFF',
                   '&:hover': {
                     backgroundColor: 'rgba(0,0,0,0.05)',
                     borderColor: '#000',

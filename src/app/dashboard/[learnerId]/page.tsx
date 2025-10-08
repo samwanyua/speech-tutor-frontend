@@ -60,7 +60,7 @@ export default function LearnerDetailPage() {
             “{learner.recentFeedback}”
           </Typography>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, backgroundColor: 'transparent' }}>
             <Link href="/dashboard" style={{ textDecoration: 'none' }}>
               <Button variant="outlined" sx={{ textTransform: 'none' }}>
                 Back to Dashboard
