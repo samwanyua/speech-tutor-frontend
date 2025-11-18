@@ -10,10 +10,12 @@ import {
   Typography,
   Box,
   Button,
-  Grid,
   Container,
   Divider,
 } from '@mui/material';
+
+import Grid from '@mui/material/Grid';
+
 
 export default function Home() {
   return (
