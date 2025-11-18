@@ -20,7 +20,7 @@ export default function LoginPage() {
   const handleSubmit = async () => {
     try {
       const data = await loginUser(email, password);
-      login(email, data.access_token);
+      login(data.access_token);
       setMessage('Login successful!');
       setIsError(false);
       setTimeout(() => router.push('/dashboard'), 1000);
