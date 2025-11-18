@@ -1,41 +1,57 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getCurrentUser } from '@/utils/api';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
 
 interface AuthContextType {
-  user: { email: string } | null;
+  user: User | null;
   token: string | null;
-  login: (email: string, token: string) => void;
+  login: (token: string) => Promise<void>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<{ email: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
+  // Load user from stored token on refresh
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-    if (savedToken && savedUser) {
-      setToken(savedToken);
-      setUser(JSON.parse(savedUser));
-    }
+    if (!savedToken) return;
+
+    setToken(savedToken);
+
+    // Fetch user details using "/api/auth/me"
+    getCurrentUser()
+      .then((data) => setUser(data))
+      .catch(() => {
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
+      });
   }, []);
 
-  const login = (email: string, newToken: string) => {
-    setUser({ email });
+  // Login using backend token only
+  const login = async (newToken: string) => {
     setToken(newToken);
     localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify({ email }));
+
+    const currentUser = await getCurrentUser();
+    setUser(currentUser);
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
   };
 
   return (

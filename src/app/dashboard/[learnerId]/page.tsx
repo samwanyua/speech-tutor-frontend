@@ -1,70 +1,43 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { Box, Card, CardContent, Typography, Button } from '@mui/material';
 import ProgressChart from '@/components/ProgressChart';
 import Link from 'next/link';
+import api from '@/utils/api'; 
 
 export default function LearnerDetailPage() {
   const { learnerId } = useParams();
+  const [data, setData] = useState<any>(null);
 
-  // Mock learner data (later fetched from backend)
-  const learner = {
-    id: learnerId,
-    name: learnerId?.toString().charAt(0).toUpperCase() + learnerId?.toString().slice(1),
-    accuracy: 82,
-    fluency: 76,
-    recentFeedback: 'Great progress! Focus on clearer vowel pronunciation.',
-  };
+  useEffect(() => {
+    if (!learnerId) return;
+
+    api.get(`/dashboard/${learnerId}`)
+      .then(res => setData(res.data))
+      .catch(err => console.error(err));
+  }, [learnerId]);
+
+  if (!data) return <p>Loading...</p>;
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '85vh',
-        backgroundColor: 'transparent',
-        p: 3,
-      }}
-    >
-      <Card
-        elevation={4}
-        sx={{
-          width: '100%',
-          maxWidth: 700,
-          borderRadius: 4,
-          backgroundColor: 'rgba(255,255,255,0.25)',
-          backdropFilter: 'blur(8px)',
-          p: 4,
-        }}
-      >
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '85vh', p: 3 }}>
+      <Card elevation={4} sx={{ width: '100%', maxWidth: 700, borderRadius: 4, p: 4 }}>
         <CardContent>
-          <Typography
-            variant="h4"
-            textAlign="center"
-            fontWeight={700}
-            gutterBottom
-          >
-            {learner.name}’s Progress
+          <Typography variant="h4" textAlign="center" fontWeight={700} gutterBottom>
+            {data.name}’s Progress
           </Typography>
 
-          <ProgressChart accuracy={learner.accuracy} fluency={learner.fluency} />
+          <ProgressChart accuracy={data.accuracy ?? 0} fluency={data.fluency ?? 0} />
 
-          <Typography
-            variant="body1"
-            textAlign="center"
-            sx={{ mt: 3, fontStyle: 'italic', color: '#2e7d32' }}
-          >
-            “{learner.recentFeedback}”
+          <Typography variant="body1" textAlign="center" sx={{ mt: 3, fontStyle: 'italic', color: '#2e7d32' }}>
+            “{data.recent_feedback ?? 'No feedback yet'}”
           </Typography>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, backgroundColor: 'transparent' }}>
-            <Link href="/dashboard" style={{ textDecoration: 'none' }}>
-              <Button variant="outlined" sx={{ textTransform: 'none' }}>
-                Back to Dashboard
-              </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <Link href="/dashboard">
+              <Button variant="outlined">Back to Dashboard</Button>
             </Link>
           </Box>
         </CardContent>

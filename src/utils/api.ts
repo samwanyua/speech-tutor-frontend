@@ -1,48 +1,48 @@
 // src/utils/api.ts
-import { useAuth } from '@/context/AuthContext';
 
-const API_BASE_URL = "https://sauticare-backend-pp07lt279-sams-projects-7b510dbf.vercel.app"; 
+const API_BASE_URL =
+  "https://sauticare-backend-pp07lt279-sams-projects-7b510dbf.vercel.app/api";
 
-// ---------------- Auth ----------------
+// ---------------- AUTH ----------------
 export async function loginUser(email: string, password: string) {
-  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {  
+  const res = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
   if (!res.ok) throw new Error("Login failed");
-  return res.json();
+  return res.json(); // { access_token, user }
 }
 
 export async function registerUser(name: string, email: string, password: string) {
-  const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {  // <-- added /api
+  const res = await fetch(`${API_BASE_URL}/auth/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
   });
-  return res.ok;
+  if (!res.ok) throw new Error("Signup failed");
+  return res.json();
 }
 
-// ---------------- Lessons ----------------
+// ---------------- LESSONS ----------------
 export async function fetchLessons() {
   const res = await fetch(`${API_BASE_URL}/lessons`);
   if (!res.ok) throw new Error("Failed to fetch lessons");
   return res.json();
 }
 
-// Optional: fetch lesson by difficulty
 export async function fetchLessonsByDifficulty(difficulty: string) {
   const res = await fetch(`${API_BASE_URL}/lessons/${difficulty}`);
   if (!res.ok) throw new Error(`Failed to fetch ${difficulty} lessons`);
   return res.json();
 }
 
-// ---------------- Feedback ----------------
-export async function submitFeedback(userId: string, feedback: string) {
+// ---------------- FEEDBACK ----------------
+export async function submitFeedback(userId: number, lessonId: string, comment: string) {
   const res = await fetch(`${API_BASE_URL}/feedback`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId, feedback }),
+    body: JSON.stringify({ user_id: userId, lesson_id: lessonId, comment }),
   });
   if (!res.ok) throw new Error("Failed to submit feedback");
   return res.json();
@@ -57,6 +57,7 @@ export async function speechToText(audioData: Blob) {
     method: "POST",
     body: formData,
   });
+
   if (!res.ok) throw new Error("STT failed");
   return res.json();
 }
@@ -67,93 +68,58 @@ export async function textToSpeech(text: string) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text }),
   });
+
   if (!res.ok) throw new Error("TTS failed");
-  return res.blob(); // Assuming backend returns audio file
+  return res.blob(); // audio output
 }
 
-// ---------------- Profile ----------------
+// ---------------- PROFILE ----------------
 export async function getProfile(userId?: number) {
-  // if userId is provided, fetch /api/profile/{id}, else fetch /api/profile (current user)
-  const url = userId ? `${API_BASE_URL}/api/profile/${userId}` : `${API_BASE_URL}/api/profile`;
+  const url = userId
+    ? `${API_BASE_URL}/profile/${userId}`
+    : `${API_BASE_URL}/profile`;
 
   const res = await fetch(url, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!res.ok) {
-    console.error('Failed to fetch profile', res.status);
-    return null;
-  }
-
-  const data = await res.json();
-  return {
-    preferred_name: data.preferred_name || '',
-    age: data.age || '',
-    language: data.language || 'english',
-    bio: data.bio || '',
-    interests: data.interests || '',
-    location: data.location || '',
-    gender: data.gender || '',
-    educationLevel: data.educationLevel || '',
-  };
+  if (!res.ok) return null;
+  return res.json();
 }
 
-
-export async function saveProfile(profileData: {
-  user_id: number;
-  preferred_name: string;
-  age: string;
-  language: string;
-  bio: string;
-  interests: string;
-  location: string;
-  gender: string;
-  educationLevel: string 
-}) {
-  const res = await fetch(`${API_BASE_URL}/api/profile`, {
-    method: "POST", // or PUT if your backend requires
+export async function saveProfile(profileData: any) {
+  const res = await fetch(`${API_BASE_URL}/profile`, {
+    method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(profileData),
   });
 
-  if (!res.ok) {
-    console.error('Failed to save profile', res.status);
-    throw new Error('Failed to save profile');
-  }
-
-  // Ensure backend returns saved profile object
-  const data = await res.json();
-  return {
-    preferred_name: data.preferred_name || '',
-    age: data.age || '',
-    language: data.language || 'english',
-    bio: data.bio || '',
-    interests: data.interests || '',
-    location: data.location || '',
-    gender: data.gender || '',
-    educationLevel: data.educationLevel || ''
-  };
+  if (!res.ok) throw new Error("Failed to save profile");
+  return res.json();
 }
 
-
-
+// ---------------- CURRENT USER ----------------
 export async function getCurrentUser() {
-  // Try reading token from localStorage as a fallback
-  const token = localStorage.getItem('token'); 
-  if (!token) throw new Error('No token found. Please log in.');
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No token found. Please log in.");
 
-  const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
-    method: 'GET',
+  const res = await fetch(`${API_BASE_URL}/auth/me`, {
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`, // include token in Authorization header
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 
-  if (!res.ok) throw new Error('Failed to fetch current user');
-
+  if (!res.ok) throw new Error("Failed to fetch current user");
   return res.json(); // { id, name, email }
 }
 
+// ---------------- DASHBOARD (NEW) ----------------
+export async function getDashboardData(learnerId: number | string) {
+  const res = await fetch(`${API_BASE_URL}/dashboard/${learnerId}`);
+  if (!res.ok) throw new Error("Failed to fetch learner dashboard");
 
+  return res.json(); // { learner_id, name, accuracy, fluency, feedback }
+}
