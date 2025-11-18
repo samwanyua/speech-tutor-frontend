@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { Box, Card, CardContent, Typography, Button } from '@mui/material';
 import ProgressChart from '@/components/ProgressChart';
 import Link from 'next/link';
-import api from '@/utils/api'; 
+import { getDashboardData } from '@/utils/api';
 
 export default function LearnerDetailPage() {
   const { learnerId } = useParams();
@@ -14,9 +14,11 @@ export default function LearnerDetailPage() {
   useEffect(() => {
     if (!learnerId) return;
 
-    api.get(`/dashboard/${learnerId}`)
-      .then(res => setData(res.data))
-      .catch(err => console.error(err));
+    const id = Array.isArray(learnerId) ? learnerId[0] : learnerId;
+
+    getDashboardData(id)
+      .then((json) => setData(json))
+      .catch((err) => console.error(err));
   }, [learnerId]);
 
   if (!data) return <p>Loading...</p>;
