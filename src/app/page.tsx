@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <Box
       sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0)', // transparent white card
+        backgroundColor: 'rgba(255, 255, 255, 0)', 
         backdropFilter: 'blur(8px)',
         minHeight: '100vh',
         py: 6,
