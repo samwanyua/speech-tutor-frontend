@@ -1,7 +1,7 @@
 // src/utils/api.ts
 import { useAuth } from '@/context/AuthContext';
 
-const API_BASE_URL = "https://sauticare-backend.vercel.app"; 
+const API_BASE_URL = "https://sauticare-backend-pp07lt279-sams-projects-7b510dbf.vercel.app"; 
 
 // ---------------- Auth ----------------
 export async function loginUser(email: string, password: string) {
