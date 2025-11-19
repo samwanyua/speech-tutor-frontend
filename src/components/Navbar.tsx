@@ -9,7 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '@/context/AuthContext';
 
-export default function Navbar(): {
+export default function Navbar() {
   const router = useRouter();
   const { user, logout } = useAuth(); // <-- from AuthContext
   const [lessonsAnchor, setLessonsAnchor] = useState<null | HTMLElement>(null);
