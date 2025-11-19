@@ -14,7 +14,7 @@ import {
   Divider,
 } from '@mui/material';
 
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
 
 
 
@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <Box
       sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0)', 
+        backgroundColor: 'rgba(255, 255, 255, 0)', // transparent white card
         backdropFilter: 'blur(8px)',
         minHeight: '100vh',
         py: 6,
@@ -167,6 +167,7 @@ export default function Home() {
                 display: 'flex',
                 justifyContent: 'center',
               }}
+               {...({} as any)}
             >
               <Card
                 elevation={3}
