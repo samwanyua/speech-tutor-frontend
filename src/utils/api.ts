@@ -1,7 +1,7 @@
 // src/utils/api.ts
 
 const API_BASE_URL =
-  "https://sauticare-backend-kul56wnfo-sams-projects-7b510dbf.vercel.app";
+  "https://sauticare-backend-kul56wnfo-sams-projects-7b510dbf.vercel.app/api";
 
 // ---------------- AUTH ----------------
 export async function loginUser(email: string, password: string) {
