@@ -37,7 +37,7 @@ export default function GuardianDashboard() {
 
         <Grid container spacing={3}>
           {learners.map((learner) => (
-            <Grid item xs={12} sm={6} md={4} key={learner.id}>
+            <Grid item xs={12} sm={6} md={4} key={learner.id} {...({} as any)}>
               <LearnerCard learner={learner}/>
             </Grid>
           ))}
