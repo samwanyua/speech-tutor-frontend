@@ -27,6 +27,21 @@ export interface SignupData {
   date_of_birth?: string; // ISO string e.g., '2000-01-01'
 }
 
+export interface LearnerProfile {
+  impairment_type?: string;
+  severity_level?: string;
+  date_of_birth?: string;
+}
+
+export interface User {
+  id: string;
+  full_name: string;
+  email: string;
+  role: 'learner' | 'teacher' | 'admin';
+  language_preference?: string;
+  learner_profile?: LearnerProfile;
+}
+
 export async function registerUser(data: SignupData) {
   const res = await fetch(`${API_BASE_URL}/auth/signup`, {
     method: "POST",
