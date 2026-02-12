@@ -406,7 +406,7 @@ export default function LearnerDetailPage() {
 
                 {(analytics?.summary?.current_streak || 0) > 0 && (
                 <Alert severity="success" sx={{ mt: 2 }}>
-                    🔥 Current streak: {analytics.summary?.current_streak || 0} days!
+                    🔥 Current streak: {analytics?.summary?.current_streak || 0} days!
                 </Alert>
                 )}
 
