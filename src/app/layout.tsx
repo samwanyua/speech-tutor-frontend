@@ -6,7 +6,6 @@ import { ReactNode } from "react";
 import { poppins } from "./fonts";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
-import { LessonProvider } from "@/context/LessonContext"; 
 
 const theme = createTheme({
   palette: {
@@ -60,11 +59,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           />
 
           <AuthProvider>
-            <LessonProvider> 
               <Navbar />
               {/* Main app content */}
               <main style={{ marginTop: 30 }}>{children}</main>
-            </LessonProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
