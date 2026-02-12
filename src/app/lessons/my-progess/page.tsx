@@ -106,7 +106,7 @@ export default function MyProgressPage() {
 
       {/* Summary Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={4} {...({} as any)}>
           <Card elevation={2}>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h3" fontWeight={700} color="success.main">
@@ -119,7 +119,7 @@ export default function MyProgressPage() {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={4} {...({} as any)}>
           <Card elevation={2}>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h3" fontWeight={700} color="warning.main">
@@ -132,7 +132,7 @@ export default function MyProgressPage() {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={4} {...({} as any)}>
           <Card elevation={2}>
             <CardContent sx={{ textAlign: 'center' }}>
               <Typography variant="h3" fontWeight={700} color="primary.main">
@@ -166,7 +166,7 @@ export default function MyProgressPage() {
       ) : (
         <Grid container spacing={3}>
           {progress.map((item) => (
-            <Grid item xs={12} md={6} key={item.id}>
+            <Grid item xs={12} md={6} key={item.id} {...({} as any)}>
               <Card
                 elevation={2}
                 sx={{
