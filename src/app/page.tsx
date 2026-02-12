@@ -132,7 +132,7 @@ export default function Home() {
               title: 'Lessons',
               description:
                 'Practice speaking through nutrition and hygiene phrases. Learn at your own pace with easy, medium, and hard levels.',
-              link: '/lessons/easy',
+              link: '/lessons/',
               button: 'Start Learning',
             },
             {
