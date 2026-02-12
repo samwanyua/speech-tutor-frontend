@@ -250,7 +250,7 @@ export default function LearnerDetailPage() {
         <CardContent>
           <Grid container spacing={3}>
             {/* Profile Info */}
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} {...({} as any)}>
               <Box sx={{ textAlign: 'center' }}>
                 <Avatar
                   sx={{
@@ -318,13 +318,13 @@ export default function LearnerDetailPage() {
             </Grid>
 
             {/* Quick Stats */}
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={8} {...({} as any)}>
               <Typography variant="h6" fontWeight={600} gutterBottom>
                 Performance Overview
               </Typography>
 
               <Grid container spacing={2} sx={{ mb: 3 }}>
-                <Grid item xs={6} sm={3}>
+                <Grid item xs={6} sm={3} {...({} as any)}>
                   <Paper elevation={0} sx={{ p: 2, bgcolor: 'rgba(0,0,0,0.02)', textAlign: 'center' }}>
                     <SchoolIcon sx={{ fontSize: 32, color: 'primary.main', mb: 1 }} />
                     <Typography variant="h4" fontWeight={700}>
@@ -336,7 +336,7 @@ export default function LearnerDetailPage() {
                   </Paper>
                 </Grid>
 
-                <Grid item xs={6} sm={3}>
+                <Grid item xs={6} sm={3} {...({} as any)}>
                   <Paper elevation={0} sx={{ p: 2, bgcolor: 'rgba(0,0,0,0.02)', textAlign: 'center' }}>
                     <TrendingUpIcon sx={{ fontSize: 32, color: 'success.main', mb: 1 }} />
                     <Typography variant="h4" fontWeight={700}>
@@ -348,7 +348,7 @@ export default function LearnerDetailPage() {
                   </Paper>
                 </Grid>
 
-                <Grid item xs={6} sm={3}>
+                <Grid item xs={6} sm={3} {...({} as any)}>
                   <Paper elevation={0} sx={{ p: 2, bgcolor: 'rgba(0,0,0,0.02)', textAlign: 'center' }}>
                     <TimerIcon sx={{ fontSize: 32, color: 'warning.main', mb: 1 }} />
                     <Typography variant="h4" fontWeight={700}>
@@ -360,7 +360,7 @@ export default function LearnerDetailPage() {
                   </Paper>
                 </Grid>
 
-                <Grid item xs={6} sm={3}>
+                <Grid item xs={6} sm={3} {...({} as any)}>
                   <Paper elevation={0} sx={{ p: 2, bgcolor: 'rgba(0,0,0,0.02)', textAlign: 'center' }}>
                     <PersonIcon sx={{ fontSize: 32, color: 'error.main', mb: 1 }} />
                     <Typography variant="h4" fontWeight={700}>
@@ -404,11 +404,12 @@ export default function LearnerDetailPage() {
                   />
                 </Box>
 
-                {analytics?.summary.current_streak > 0 && (
-                  <Alert severity="success" sx={{ mt: 2 }}>
-                    🔥 Current streak: {analytics.summary.current_streak} days!
-                  </Alert>
+                {(analytics?.summary?.current_streak || 0) > 0 && (
+                <Alert severity="success" sx={{ mt: 2 }}>
+                    🔥 Current streak: {analytics.summary?.current_streak || 0} days!
+                </Alert>
                 )}
+
               </Box>
             </Grid>
           </Grid>
@@ -512,7 +513,7 @@ export default function LearnerDetailPage() {
       {tabValue === 1 && (
         <Grid container spacing={3}>
           {progress.length === 0 ? (
-            <Grid item xs={12}>
+            <Grid item xs={12} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center', py: 6 }}>
                   <Typography variant="h6" color="text.secondary">
@@ -523,7 +524,7 @@ export default function LearnerDetailPage() {
             </Grid>
           ) : (
             progress.map((item: any) => (
-              <Grid item xs={12} md={6} key={item.id}>
+              <Grid item xs={12} md={6} key={item.id} {...({} as any)}>
                 <Card elevation={2}>
                   <CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>

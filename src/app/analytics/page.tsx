@@ -130,7 +130,7 @@ export default function AnalyticsPage() {
         <>
           {/* Summary Stats */}
           <Grid container spacing={3} sx={{ mb: 4 }}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={3} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <SchoolIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
@@ -144,7 +144,7 @@ export default function AnalyticsPage() {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={3} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <TimerIcon sx={{ fontSize: 40, color: 'warning.main', mb: 1 }} />
@@ -158,7 +158,7 @@ export default function AnalyticsPage() {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={3} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <TrendingUpIcon
@@ -174,7 +174,7 @@ export default function AnalyticsPage() {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={3} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <EmojiEventsIcon
@@ -240,7 +240,7 @@ export default function AnalyticsPage() {
               </Box>
 
               <Grid container spacing={2} sx={{ mt: 2 }}>
-                <Grid item xs={6}>
+                <Grid item xs={6} {...({} as any)}>
                   <Typography variant="body2" color="text.secondary">
                     Total Attempts
                   </Typography>
@@ -248,7 +248,7 @@ export default function AnalyticsPage() {
                     {dashboardData.summary.total_attempts}
                   </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={6} {...({} as any)}>
                   <Typography variant="body2" color="text.secondary">
                     Successful Attempts
                   </Typography>
@@ -306,7 +306,7 @@ export default function AnalyticsPage() {
       {tabValue === 2 && achievements && (
         <>
           <Grid container spacing={3} sx={{ mb: 4 }}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={3} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <LocalFireDepartmentIcon
@@ -322,7 +322,7 @@ export default function AnalyticsPage() {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={3} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <EmojiEventsIcon
@@ -338,7 +338,7 @@ export default function AnalyticsPage() {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={3} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <SchoolIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
@@ -352,7 +352,7 @@ export default function AnalyticsPage() {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={3} {...({} as any)}>
               <Card elevation={2}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <TrendingUpIcon

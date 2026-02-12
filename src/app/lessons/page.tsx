@@ -97,7 +97,7 @@ export default function LessonsPage() {
       {/* Filters */}
       <Card elevation={2} sx={{ mb: 4, p: 2 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} {...({} as any)}>
             <FormControl fullWidth size="small">
               <InputLabel>Category</InputLabel>
               <Select
@@ -112,7 +112,7 @@ export default function LessonsPage() {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} {...({} as any)}>
             <FormControl fullWidth size="small">
               <InputLabel>Difficulty</InputLabel>
               <Select
@@ -128,7 +128,7 @@ export default function LessonsPage() {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} {...({} as any)}>
             <FormControl fullWidth size="small">
               <InputLabel>Language</InputLabel>
               <Select
@@ -157,7 +157,7 @@ export default function LessonsPage() {
       ) : (
         <Grid container spacing={3}>
           {lessons.map((lesson) => (
-            <Grid item xs={12} sm={6} md={4} key={lesson.id}>
+            <Grid item xs={12} sm={6} md={4} key={lesson.id} {...({} as any)}>
               <Card
                 elevation={3}
                 sx={{

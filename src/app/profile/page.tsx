@@ -145,7 +145,7 @@ export default function ProfilePage() {
 
       <Grid container spacing={4}>
         {/* Profile Info */}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} {...({} as any)}>
           <Card elevation={3}>
             <CardContent sx={{ textAlign: 'center', py: 4 }}>
               <Avatar
@@ -204,7 +204,7 @@ export default function ProfilePage() {
         </Grid>
 
         {/* Voice Samples */}
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} {...({} as any)}>
           <Card elevation={3}>
             <CardContent>
               <Box
