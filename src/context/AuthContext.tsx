@@ -4,16 +4,18 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getCurrentUser } from '@/utils/api';
 
 interface User {
-  id: number;
-  name: string;
+  id: string;          // UUID (not number)
+  full_name: string;
   email: string;
+  role?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   token: string | null;
+  loading: boolean;
   login: (token: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,41 +23,58 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Load user from stored token on refresh
+  // 🔹 Load user on refresh
   useEffect(() => {
-    const savedToken = localStorage.getItem('token');
-    if (!savedToken) return;
+    const initializeAuth = async () => {
+      const savedToken = localStorage.getItem('token');
 
-    setToken(savedToken);
+      if (!savedToken) {
+        setLoading(false);
+        return;
+      }
 
-    // Fetch user details using "/api/auth/me"
-    getCurrentUser()
-      .then((data) => setUser(data))
-      .catch(() => {
+      try {
+        setToken(savedToken);
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error("Auth validation failed:", error);
         localStorage.removeItem('token');
         setToken(null);
         setUser(null);
-      });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
   }, []);
 
-  // Login using backend token only
+  // 🔹 Login
   const login = async (newToken: string) => {
-    setToken(newToken);
-    localStorage.setItem('token', newToken);
+    try {
+      setLoading(true);
+      setToken(newToken);
+      localStorage.setItem('token', newToken);
 
-    const currentUser = await getCurrentUser();
-    setUser(currentUser);
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const logout = () => {
+  // 🔹 Logout
+  const logout = async () => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
