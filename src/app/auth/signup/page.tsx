@@ -1,82 +1,175 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Box, Card, CardContent, Typography, TextField, Button, Divider, Stack } from '@mui/material';
+import {
+  Box, Card, CardContent, Typography, TextField, Button,
+  MenuItem, Select, InputLabel, FormControl, IconButton, InputAdornment
+} from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { registerUser } from '@/utils/api';
-import GoogleIcon from '@mui/icons-material/Google';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import FacebookIcon from '@mui/icons-material/Facebook';
+import { registerUser, loginUser, SignupData } from '@/utils/api';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export default function SignupPage() {
+export default function AuthPage() {
   const router = useRouter();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [isLogin, setIsLogin] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState(false);
+  const [form, setForm] = useState<SignupData>({
+    email: '',
+    password: '',
+    full_name: '',
+    role: 'learner',
+    language_preference: 'English',
+    impairment_type: 'Cerebral Palsy',
+    severity_level: 'Mild',
+    date_of_birth: '',
+  });
+
+  const languages = ['English', 'Swahili'];
+  const impairments = [
+    'Cerebral Palsy',
+    'Neurodevelopmental disorders',
+    'Neurological disorders',
+    'Multiple Sclerosis (MS)',
+    'Parkinson’s Disease',
+    'Autism Spectrum Disorder (ASD)',
+    'Down Syndrome'
+  ];
+  const severityLevels = ['Mild', 'Moderate', 'Severe', 'Profound'];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setForm({ ...form, [name]: value });
+  };
 
   const handleSubmit = async () => {
     try {
-      const success = await registerUser(name, email, password);
-      if (success) {
-        setMessage('Account created! Redirecting to login...');
-        setIsError(false);
-        setTimeout(() => router.push('/auth/login'), 1500);
+      if (isLogin) {
+        const data = await loginUser(form.email, form.password);
+        localStorage.setItem('token', data.access_token);
+        setMessage('Login successful!');
+        setTimeout(() => router.push('/dashboard'), 1000);
       } else {
-        setMessage('Sign-up failed. Try again.');
-        setIsError(true);
+        await registerUser(form);
+        setMessage('Signup successful!');
+        setTimeout(() => setIsLogin(true), 1000);
       }
     } catch (err: any) {
-      setMessage(err?.message || 'Sign-up failed. Try again.');
-      setIsError(true);
+      setMessage(err?.message || 'Operation failed');
     }
   };
 
-  const handleSocialLogin = (provider: string) => {
-    window.location.href = `https://sauticare-backend.vercel.app/api/auth/oauth/${provider}`;
-  };
-
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '90vh', p: 2 }}>
-      <Card sx={{ width: 420, p: 3, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.25)', backdropFilter: 'blur(10px)' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '90vh' }}>
+      <Card sx={{ width: 450, p: 3, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.85)' }}>
         <CardContent>
-          <Typography variant="h5" textAlign="center" gutterBottom fontWeight={700}>Create Your Account</Typography>
-
-          {message && (
-            <Card sx={{ mb: 2, backgroundColor: isError ? '#ffebee' : '#e8f5e9' }}>
-              <CardContent>
-                <Typography color={isError ? 'error' : 'success.main'} textAlign="center">
-                  {message}
-                </Typography>
-              </CardContent>
-            </Card>
-          )}
-
-          <TextField label="Full Name" fullWidth sx={{ mb: 2 }} value={name} onChange={(e) => setName(e.target.value)} />
-          <TextField label="Email" fullWidth sx={{ mb: 2 }} value={email} onChange={(e) => setEmail(e.target.value)} />
-          <TextField label="Password" type="password" fullWidth sx={{ mb: 2 }} value={password} onChange={(e) => setPassword(e.target.value)} />
-
-          <Button fullWidth variant="contained" onClick={handleSubmit} sx={{ py: 1, fontWeight: 600 }}>Sign Up</Button>
-
-          <Typography textAlign="center" sx={{ mt: 1 }}>
-            Already have an account?{' '}
-            <Button
-              variant="text"
-              sx={{ p: 0, minWidth: 'auto', textTransform: 'none', fontWeight: 600, fontSize:16 }}
-              onClick={() => router.push('/auth/login')}
-            >
-              Log in
-            </Button>
+          <Typography variant="h5" textAlign="center" gutterBottom>
+            {isLogin ? 'Login' : 'Sign Up'}
           </Typography>
 
-          <Divider sx={{ my: 3 }}>or continue with</Divider>
+          {message && <Typography color="error" textAlign="center" sx={{ mb: 2 }}>{message}</Typography>}
 
-          <Stack direction="row" spacing={2} justifyContent="center">
-            <Button variant="outlined" startIcon={<GoogleIcon />} onClick={() => handleSocialLogin('google')}>Google</Button>
-            <Button variant="outlined" startIcon={<FacebookIcon />} onClick={() => handleSocialLogin('facebook')}>Facebook</Button>
-            <Button variant="outlined" startIcon={<GitHubIcon />} onClick={() => handleSocialLogin('github')}>GitHub</Button>
-          </Stack>
+          {!isLogin && (
+            <TextField
+              label="Full Name"
+              name="full_name"
+              fullWidth
+              sx={{ mb: 2 }}
+              value={form.full_name}
+              onChange={handleChange}
+            />
+          )}
+
+          <TextField
+            label="Email"
+            name="email"
+            fullWidth
+            sx={{ mb: 2 }}
+            value={form.email}
+            onChange={handleChange}
+          />
+
+          <TextField
+            label="Password"
+            name="password"
+            type={showPassword ? 'text' : 'password'}
+            fullWidth
+            sx={{ mb: 2 }}
+            value={form.password}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          {!isLogin && (
+            <>
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>Language Preference</InputLabel>
+                <Select
+                  value={form.language_preference}
+                  label="Language Preference"
+                  onChange={(e) => handleSelectChange('language_preference', e.target.value)}
+                >
+                  {languages.map(lang => <MenuItem key={lang} value={lang}>{lang}</MenuItem>)}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>Impairment Type</InputLabel>
+                <Select
+                  value={form.impairment_type}
+                  label="Impairment Type"
+                  onChange={(e) => handleSelectChange('impairment_type', e.target.value)}
+                >
+                  {impairments.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>Severity Level</InputLabel>
+                <Select
+                  value={form.severity_level}
+                  label="Severity Level"
+                  onChange={(e) => handleSelectChange('severity_level', e.target.value)}
+                >
+                  {severityLevels.map(level => <MenuItem key={level} value={level}>{level}</MenuItem>)}
+                </Select>
+              </FormControl>
+
+              <TextField
+                label="Date of Birth"
+                type="date"
+                name="date_of_birth"
+                fullWidth
+                sx={{ mb: 2 }}
+                InputLabelProps={{ shrink: true }}
+                value={form.date_of_birth}
+                onChange={handleChange}
+              />
+            </>
+          )}
+
+          <Button fullWidth variant="contained" onClick={handleSubmit}>
+            {isLogin ? 'Login' : 'Sign Up'}
+          </Button>
+
+          <Typography
+            sx={{ mt: 2, textAlign: 'center', cursor: 'pointer', color: 'primary.main' }}
+            onClick={() => { setIsLogin(!isLogin); setMessage(''); }}
+          >
+            {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
+          </Typography>
         </CardContent>
       </Card>
     </Box>
