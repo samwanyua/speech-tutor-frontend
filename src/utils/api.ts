@@ -88,7 +88,7 @@ export async function logoutUser() {
   return res.json();
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<User> {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("No token found");
 
@@ -107,6 +107,7 @@ export async function getCurrentUser() {
 
   return res.json();
 }
+
 
 export async function refreshToken(refreshToken: string) {
   const res = await fetch(`${API_BASE_URL}/auth/refresh`, {
