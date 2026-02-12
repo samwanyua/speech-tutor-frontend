@@ -24,6 +24,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '@/context/AuthContext';
 import { getVoiceSamples, uploadVoiceSample, deleteVoiceSample } from '@/utils/api';
 
+import type { User } from '@/utils/api';
+
+
 interface VoiceSample {
   id: string;
   audio_url: string;
@@ -33,8 +36,12 @@ interface VoiceSample {
   recorded_at: string;
 }
 
+
+
 export default function ProfilePage() {
-  const { user, loading: authLoading } = useAuth();
+  const { user: authUser, loading: authLoading } = useAuth();
+  const user = authUser as User | null;
+
   const [voiceSamples, setVoiceSamples] = useState<VoiceSample[]>([]);
   const [loading, setLoading] = useState(true);
   const [recording, setRecording] = useState(false);
