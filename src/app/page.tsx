@@ -135,13 +135,7 @@ export default function Home() {
               link: '/lessons/',
               button: 'Start Learning',
             },
-            {
-              title: 'Learner Profile',
-              description:
-                'Set up your voice baseline and personalize the learning experience for accurate speech recognition and adaptive feedback.',
-              link: '/profile',
-              button: 'Set Up Profile',
-            },
+            
             {
               title: 'Dashboard',
               description:
