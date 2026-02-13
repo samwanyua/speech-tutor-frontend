@@ -26,13 +26,14 @@ export default function AuthPage() {
     date_of_birth: '',
   });
 
+  const roles = ['learner', 'teacher', 'guardian'];  // ✅ Added
   const languages = ['English', 'Swahili'];
   const impairments = [
     'Cerebral Palsy',
     'Neurodevelopmental disorders',
     'Neurological disorders',
     'Multiple Sclerosis (MS)',
-    'Parkinson’s Disease',
+     'Parkinson’s Disease',
     'Autism Spectrum Disorder (ASD)',
     'Down Syndrome'
   ];
@@ -114,6 +115,22 @@ export default function AuthPage() {
 
           {!isLogin && (
             <>
+              {/* ✅ NEW: Role Selection */}
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>Role</InputLabel>
+                <Select
+                  value={form.role}
+                  label="Role"
+                  onChange={(e) => handleSelectChange('role', e.target.value)}
+                >
+                  {roles.map(role => (
+                    <MenuItem key={role} value={role}>
+                      {role.charAt(0).toUpperCase() + role.slice(1)}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
               <FormControl fullWidth sx={{ mb: 2 }}>
                 <InputLabel>Language Preference</InputLabel>
                 <Select
@@ -125,38 +142,42 @@ export default function AuthPage() {
                 </Select>
               </FormControl>
 
-              <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Impairment Type</InputLabel>
-                <Select
-                  value={form.impairment_type}
-                  label="Impairment Type"
-                  onChange={(e) => handleSelectChange('impairment_type', e.target.value)}
-                >
-                  {impairments.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
-                </Select>
-              </FormControl>
+              {form.role === 'learner' && (
+                <>
+                  <FormControl fullWidth sx={{ mb: 2 }}>
+                    <InputLabel>Impairment Type</InputLabel>
+                    <Select
+                      value={form.impairment_type}
+                      label="Impairment Type"
+                      onChange={(e) => handleSelectChange('impairment_type', e.target.value)}
+                    >
+                      {impairments.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
+                    </Select>
+                  </FormControl>
 
-              <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Severity Level</InputLabel>
-                <Select
-                  value={form.severity_level}
-                  label="Severity Level"
-                  onChange={(e) => handleSelectChange('severity_level', e.target.value)}
-                >
-                  {severityLevels.map(level => <MenuItem key={level} value={level}>{level}</MenuItem>)}
-                </Select>
-              </FormControl>
+                  <FormControl fullWidth sx={{ mb: 2 }}>
+                    <InputLabel>Severity Level</InputLabel>
+                    <Select
+                      value={form.severity_level}
+                      label="Severity Level"
+                      onChange={(e) => handleSelectChange('severity_level', e.target.value)}
+                    >
+                      {severityLevels.map(level => <MenuItem key={level} value={level}>{level}</MenuItem>)}
+                    </Select>
+                  </FormControl>
 
-              <TextField
-                label="Date of Birth"
-                type="date"
-                name="date_of_birth"
-                fullWidth
-                sx={{ mb: 2 }}
-                InputLabelProps={{ shrink: true }}
-                value={form.date_of_birth}
-                onChange={handleChange}
-              />
+                  <TextField
+                    label="Date of Birth"
+                    type="date"
+                    name="date_of_birth"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    InputLabelProps={{ shrink: true }}
+                    value={form.date_of_birth}
+                    onChange={handleChange}
+                  />
+                </>
+              )}
             </>
           )}
 

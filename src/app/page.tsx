@@ -59,7 +59,7 @@ export default function Home() {
               color="primary"
               size="large"
               component={Link}
-              href="/profile"
+              href="/auth/login"
               sx={{
                 borderRadius: '24px',
                 textTransform: 'none',
