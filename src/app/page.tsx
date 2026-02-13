@@ -59,7 +59,7 @@ export default function Home() {
               color="primary"
               size="large"
               component={Link}
-              href="/auth/signup"
+              href="/profile"
               sx={{
                 borderRadius: '24px',
                 textTransform: 'none',
@@ -109,7 +109,7 @@ export default function Home() {
           py: 8,
         }}
       >
-        {/* <Typography
+        <Typography
           variant="h4"
           textAlign="center"
           fontWeight={600}
@@ -117,10 +117,10 @@ export default function Home() {
           sx={{ mb: 4 }}
         >
           Explore SautiCare
-        </Typography> */}
+        </Typography>
 
         {/* Grid container */}
-        {/* <Grid
+        <Grid
           container
           spacing={4}
           justifyContent="center"
@@ -149,7 +149,13 @@ export default function Home() {
               link: '/dashboard',
               button: 'View Dashboard',
             },
-          
+            // {
+            //   title: 'Offline Mode',
+            //   description:
+            //     'Keep learning even without internet access. Your progress will sync automatically once reconnected.',
+            //   link: '/offline',
+            //   button: 'Go Offline',
+            // },
           ].map((card, index) => (
             <Grid
               key={index}
@@ -221,7 +227,7 @@ export default function Home() {
               </Card>
             </Grid>
           ))}
-        </Grid> */}
+        </Grid>
       </Container>
 
 
