@@ -95,55 +95,92 @@ export default function LessonsPage() {
       )}
 
       {/* Filters */}
-      <Card elevation={2} sx={{ mb: 4, p: 2 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={4} {...({} as any)}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Category</InputLabel>
-              <Select
-                value={category}
-                label="Category"
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <MenuItem value="">All</MenuItem>
-                <MenuItem value="nutrition">Nutrition</MenuItem>
-                <MenuItem value="hygiene">Hygiene</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+      {/* Filters - COMPLETELY REDESIGNED */}
+<Card elevation={2} sx={{ mb: 4 }}>
+  <CardContent sx={{ p: 4 }}>
+    <Typography variant="h6" fontWeight={600} sx={{ mb: 3 }}>
+      Filter Lessons
+    </Typography>
+    
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={4}>
+        <Box>
+          <Typography variant="body2" fontWeight={600} sx={{ mb: 1, color: 'text.secondary' }}>
+            Category
+          </Typography>
+          <Select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            fullWidth
+            displayEmpty
+            sx={{
+              height: 50,
+              backgroundColor: 'white',
+              '& .MuiSelect-select': {
+                py: 1.5,
+              },
+            }}
+          >
+            <MenuItem value="">All Categories</MenuItem>
+            <MenuItem value="nutrition">Nutrition</MenuItem>
+            <MenuItem value="hygiene">Hygiene</MenuItem>
+          </Select>
+        </Box>
+      </Grid>
 
-          <Grid item xs={12} sm={4} {...({} as any)}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Difficulty</InputLabel>
-              <Select
-                value={difficulty}
-                label="Difficulty"
-                onChange={(e) => setDifficulty(e.target.value)}
-              >
-                <MenuItem value="">All</MenuItem>
-                <MenuItem value="1">Easy (1-2)</MenuItem>
-                <MenuItem value="3">Medium (3)</MenuItem>
-                <MenuItem value="4">Hard (4-5)</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+      <Grid item xs={12} sm={4}>
+        <Box>
+          <Typography variant="body2" fontWeight={600} sx={{ mb: 1, color: 'text.secondary' }}>
+            Difficulty
+          </Typography>
+          <Select
+            value={difficulty}
+            onChange={(e) => setDifficulty(e.target.value)}
+            fullWidth
+            displayEmpty
+            sx={{
+              height: 50,
+              backgroundColor: 'white',
+              '& .MuiSelect-select': {
+                py: 1.5,
+              },
+            }}
+          >
+            <MenuItem value="">All Levels</MenuItem>
+            <MenuItem value="1">Easy (Level 1-2)</MenuItem>
+            <MenuItem value="3">Medium (Level 3)</MenuItem>
+            <MenuItem value="4">Hard (Level 4-5)</MenuItem>
+          </Select>
+        </Box>
+      </Grid>
 
-          <Grid item xs={12} sm={4} {...({} as any)}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Language</InputLabel>
-              <Select
-                value={language}
-                label="Language"
-                onChange={(e) => setLanguage(e.target.value)}
-              >
-                <MenuItem value="">All</MenuItem>
-                <MenuItem value="en-KE">English</MenuItem>
-                <MenuItem value="sw">Swahili</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-      </Card>
+      <Grid item xs={12} sm={4}>
+        <Box>
+          <Typography variant="body2" fontWeight={600} sx={{ mb: 1, color: 'text.secondary' }}>
+            Language
+          </Typography>
+          <Select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            fullWidth
+            displayEmpty
+            sx={{
+              height: 50,
+              backgroundColor: 'white',
+              '& .MuiSelect-select': {
+                py: 1.5,
+              },
+            }}
+          >
+            <MenuItem value="">All Languages</MenuItem>
+            <MenuItem value="en-KE">English (Kenyan)</MenuItem>
+            <MenuItem value="sw">Swahili</MenuItem>
+          </Select>
+        </Box>
+      </Grid>
+    </Grid>
+  </CardContent>
+</Card>
 
       {/* Lessons Grid */}
       {loading ? (

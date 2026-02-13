@@ -59,9 +59,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           />
 
           <AuthProvider>
-              <Navbar />
-              {/* Main app content */}
-              <main style={{ marginTop: 30 }}>{children}</main>
+            <Navbar />
+            {/* Remove Container wrapper - let each page control its own layout */}
+            <main>{children}</main>
           </AuthProvider>
         </ThemeProvider>
       </body>
