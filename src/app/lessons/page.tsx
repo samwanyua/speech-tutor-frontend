@@ -103,7 +103,7 @@ export default function LessonsPage() {
     </Typography>
     
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={4} {...({} as any)}>
         <Box>
           <Typography variant="body2" fontWeight={600} sx={{ mb: 1, color: 'text.secondary' }}>
             Category
@@ -128,7 +128,7 @@ export default function LessonsPage() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={4} {...({} as any)}>
         <Box>
           <Typography variant="body2" fontWeight={600} sx={{ mb: 1, color: 'text.secondary' }}>
             Difficulty
@@ -154,7 +154,7 @@ export default function LessonsPage() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={4} {...({} as any)}>
         <Box>
           <Typography variant="body2" fontWeight={600} sx={{ mb: 1, color: 'text.secondary' }}>
             Language
