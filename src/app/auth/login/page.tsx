@@ -56,13 +56,13 @@ export default function LoginPage() {
           <Button fullWidth variant="contained" onClick={handleSubmit}>Login</Button>
           <Button fullWidth variant="text" sx={{ mt: 1 }} onClick={() => router.push('/auth/signup')}>Create Account</Button>
 
-          <Divider sx={{ my: 3 }}>or continue with</Divider>
+          {/* <Divider sx={{ my: 3 }}>or continue with</Divider>
 
           <Stack direction="row" spacing={2} justifyContent="center">
             <Button variant="outlined" startIcon={<GoogleIcon />} onClick={() => handleSocialLogin('google')}>Google</Button>
             <Button variant="outlined" startIcon={<FacebookIcon />} onClick={() => handleSocialLogin('facebook')}>Facebook</Button>
             <Button variant="outlined" startIcon={<GitHubIcon />} onClick={() => handleSocialLogin('github')}>GitHub</Button>
-          </Stack>
+          </Stack> */}
         </CardContent>
       </Card>
     </Box>
