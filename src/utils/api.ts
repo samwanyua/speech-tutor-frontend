@@ -1,6 +1,6 @@
 // src/utils/api.ts
 
-const API_BASE_URL = "https://sauticare-backend-6rg6.onrender.com/api/v1";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/v1";
 
 /* -------------------------------- AUTH -------------------------------- */
 
@@ -432,4 +432,26 @@ export async function getAchievements() {
   }
 
   return res.json();
+}
+
+
+export async function generateTTS(text: string, language: string = 'en-KE') {
+  const token = localStorage.getItem('token');
+  if (!token) throw new Error('Not authenticated');
+
+  const res = await fetch(`${API_BASE_URL}/voice/tts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ text, language }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => null);
+    throw new Error(err?.detail || 'Failed to generate TTS');
+  }
+
+  return res.blob();
 }

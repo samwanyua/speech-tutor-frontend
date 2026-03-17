@@ -192,13 +192,14 @@ export default function LessonsPage() {
           No lessons found. Try adjusting your filters.
         </Typography>
       ) : (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} alignItems="stretch">
           {lessons.map((lesson) => (
-            <Grid item xs={12} sm={6} md={4} key={lesson.id} {...({} as any)}>
+            <Grid item xs={12} sm={12} md={6} lg={4} key={lesson.id} sx={{ display: 'flex' }} {...({} as any)}>
               <Card
                 elevation={3}
                 sx={{
                   height: '100%',
+                  width: '100%',
                   display: 'flex',
                   flexDirection: 'column',
                   transition: 'transform 0.2s',

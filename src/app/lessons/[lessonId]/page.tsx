@@ -34,6 +34,7 @@ import {
   submitPhraseAttempt,
   endPracticeSession,
   updateLessonProgress,
+  generateTTS,
 } from '@/utils/api';
 
 interface Phrase {
@@ -60,6 +61,7 @@ interface AttemptResult {
   pronunciation_score: number;
   confidence_score: number;
   feedback: any;
+  audioBlob?: Blob;
 }
 
 export default function LessonDetailPage() {
@@ -176,6 +178,7 @@ export default function LessonDetailPage() {
         pronunciation_score: result.pronunciation_score,
         confidence_score: result.confidence_score,
         feedback: result.feedback,
+        audioBlob: audioBlob,
       });
 
       // Mark phrase as completed if score >= 70
@@ -222,12 +225,21 @@ export default function LessonDetailPage() {
     }
   };
 
-  const speakPhrase = (text: string) => {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = lesson?.language === 'sw' ? 'sw-KE' : 'en-KE';
-      utterance.rate = 0.8; // Slower for learning
-      window.speechSynthesis.speak(utterance);
+  const speakPhrase = async (text: string) => {
+    try {
+      const language = lesson?.language === 'sw' ? 'sw' : 'en-KE';
+      const audioBlob = await generateTTS(text, language);
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+    } catch (err) {
+      console.error('TTS failed, falling back to browser synthesis', err);
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lesson?.language === 'sw' ? 'sw-KE' : 'en-KE';
+        utterance.rate = 0.8;
+        window.speechSynthesis.speak(utterance);
+      }
     }
   };
 
@@ -448,6 +460,22 @@ export default function LessonDetailPage() {
                   <Typography variant="body1" sx={{ mb: 2 }}>
                     "{attemptResult.transcription}"
                   </Typography>
+
+                  {attemptResult.audioBlob && (
+                    <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        startIcon={<PlayArrowIcon />}
+                        onClick={() => {
+                          const url = URL.createObjectURL(attemptResult.audioBlob!);
+                          new Audio(url).play();
+                        }}
+                      >
+                        Play your recording
+                      </Button>
+                    </Box>
+                  )}
 
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Feedback:

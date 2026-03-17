@@ -14,10 +14,12 @@ export default function AuthPage() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [message, setMessage] = useState('');
-  const [form, setForm] = useState<SignupData>({
+  const [form, setForm] = useState<SignupData & { confirm_password?: string }>({
     email: '',
     password: '',
+    confirm_password: '',
     full_name: '',
     role: 'learner',
     language_preference: 'English',
@@ -55,7 +57,20 @@ export default function AuthPage() {
         setMessage('Login successful!');
         setTimeout(() => router.push('/dashboard'), 1000);
       } else {
-        await registerUser(form);
+        if (form.password !== form.confirm_password) {
+          setMessage('Passwords do not match');
+          return;
+        }
+        await registerUser({
+          email: form.email,
+          password: form.password,
+          full_name: form.full_name,
+          role: 'learner',
+          language_preference: 'English',
+          impairment_type: 'Cerebral Palsy',
+          severity_level: 'Mild',
+          date_of_birth: ''
+        });
         setMessage('Signup successful!');
         setTimeout(() => setIsLogin(true), 1000);
       }
@@ -114,71 +129,24 @@ export default function AuthPage() {
           />
 
           {!isLogin && (
-            <>
-              {/* ✅ NEW: Role Selection */}
-              <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Role</InputLabel>
-                <Select
-                  value={form.role}
-                  label="Role"
-                  onChange={(e) => handleSelectChange('role', e.target.value)}
-                >
-                  {roles.map(role => (
-                    <MenuItem key={role} value={role}>
-                      {role.charAt(0).toUpperCase() + role.slice(1)}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Language Preference</InputLabel>
-                <Select
-                  value={form.language_preference}
-                  label="Language Preference"
-                  onChange={(e) => handleSelectChange('language_preference', e.target.value)}
-                >
-                  {languages.map(lang => <MenuItem key={lang} value={lang}>{lang}</MenuItem>)}
-                </Select>
-              </FormControl>
-
-              {form.role === 'learner' && (
-                <>
-                  <FormControl fullWidth sx={{ mb: 2 }}>
-                    <InputLabel>Impairment Type</InputLabel>
-                    <Select
-                      value={form.impairment_type}
-                      label="Impairment Type"
-                      onChange={(e) => handleSelectChange('impairment_type', e.target.value)}
-                    >
-                      {impairments.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
-                    </Select>
-                  </FormControl>
-
-                  <FormControl fullWidth sx={{ mb: 2 }}>
-                    <InputLabel>Severity Level</InputLabel>
-                    <Select
-                      value={form.severity_level}
-                      label="Severity Level"
-                      onChange={(e) => handleSelectChange('severity_level', e.target.value)}
-                    >
-                      {severityLevels.map(level => <MenuItem key={level} value={level}>{level}</MenuItem>)}
-                    </Select>
-                  </FormControl>
-
-                  <TextField
-                    label="Date of Birth"
-                    type="date"
-                    name="date_of_birth"
-                    fullWidth
-                    sx={{ mb: 2 }}
-                    InputLabelProps={{ shrink: true }}
-                    value={form.date_of_birth}
-                    onChange={handleChange}
-                  />
-                </>
-              )}
-            </>
+            <TextField
+              label="Confirm Password"
+              name="confirm_password"
+              type={showConfirmPassword ? 'text' : 'password'}
+              fullWidth
+              sx={{ mb: 2 }}
+              value={form.confirm_password}
+              onChange={handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end">
+                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
           )}
 
           <Button fullWidth variant="contained" onClick={handleSubmit}>
