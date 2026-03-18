@@ -15,10 +15,12 @@ import {
 } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
+import { useAuth } from '@/context/AuthContext';
 
 
 
 export default function Home() {
+  const { user } = useAuth();
   return (
     <Box
       sx={{
@@ -54,22 +56,43 @@ export default function Home() {
               practice speech, gain confidence, and build everyday life skills.
             </Typography>
 
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              component={Link}
-              href="/auth/login"
-              sx={{
-                borderRadius: '24px',
-                textTransform: 'none',
-                px: 4,
-                py: 1.5,
-                fontWeight: 600,
-              }}
-            >
-              Get Started
-            </Button>
+            <Box sx={{ display: 'flex', gap: 2, justifyContent: { xs: 'center', md: 'flex-start' } }}>
+              {user ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  component={Link}
+                  href="/lessons"
+                  sx={{
+                    borderRadius: '24px',
+                    textTransform: 'none',
+                    px: 4,
+                    py: 1.5,
+                    fontWeight: 600,
+                  }}
+                >
+                  Go to Lessons
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  component={Link}
+                  href="/auth/login"
+                  sx={{
+                    borderRadius: '24px',
+                    textTransform: 'none',
+                    px: 4,
+                    py: 1.5,
+                    fontWeight: 600,
+                  }}
+                >
+                  Get Started
+                </Button>
+              )}
+            </Box>
           </CardContent>
 
           {/* Right image */}
@@ -99,7 +122,8 @@ export default function Home() {
       </Container>
 
      {/* ================= FEATURE CARDS SECTION ================= */}
-      <Container
+      {user && (
+        <Container
         maxWidth="lg"
         sx={{
           display: 'flex',
@@ -223,7 +247,7 @@ export default function Home() {
           ))}
         </Grid>
       </Container>
-
+      )}
 
 
       {/* ================= FOOTER ================= */}
