@@ -23,9 +23,14 @@ export default function LoginPage() {
       login(data.access_token);
       setMessage('Login successful!');
       setIsError(false);
-      setTimeout(() => router.push('/dashboard'), 1000);
+      setTimeout(() => router.push('/'), 1000);
     } catch (err: any) {
-      setMessage(err?.message || 'Failed to login. Check credentials.');
+      if (err.message === 'Failed to fetch') {
+        setMessage('Network error: Could not connect to the server. Please try again later.');
+      } else {
+        const errorText = err?.message || 'Failed to login. Check credentials.';
+        setMessage(errorText.includes('[object Object]') ? 'Invalid email or password.' : errorText);
+      }
       setIsError(true);
     }
   };

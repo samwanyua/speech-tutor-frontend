@@ -435,7 +435,7 @@ export async function getAchievements() {
 }
 
 
-export async function generateTTS(text: string, language: string = 'en-KE') {
+export async function generateTTS(text: string, language: string = 'en-KE', gender: string = 'female') {
   const token = localStorage.getItem('token');
   if (!token) throw new Error('Not authenticated');
 
@@ -445,7 +445,7 @@ export async function generateTTS(text: string, language: string = 'en-KE') {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ text, language }),
+    body: JSON.stringify({ text, language, gender }),
   });
 
   if (!res.ok) {
