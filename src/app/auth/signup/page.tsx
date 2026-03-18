@@ -55,7 +55,7 @@ export default function AuthPage() {
         const data = await loginUser(form.email, form.password);
         localStorage.setItem('token', data.access_token);
         setMessage('Login successful!');
-        setTimeout(() => router.push('/dashboard'), 1000);
+        setTimeout(() => router.push('/'), 1000);
       } else {
         if (form.password !== form.confirm_password) {
           setMessage('Passwords do not match');
@@ -75,7 +75,12 @@ export default function AuthPage() {
         setTimeout(() => setIsLogin(true), 1000);
       }
     } catch (err: any) {
-      setMessage(err?.message || 'Operation failed');
+      if (err.message === 'Failed to fetch') {
+        setMessage('Network error: Could not connect to the server. Please try again later.');
+      } else {
+        const errorText = err?.message || 'Operation failed';
+        setMessage(errorText.includes('[object Object]') ? 'Invalid input provided. Please check your details.' : errorText);
+      }
     }
   };
 

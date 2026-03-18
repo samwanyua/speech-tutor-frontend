@@ -20,6 +20,8 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  ToggleButton,
+  ToggleButtonGroup,
 } from '@mui/material';
 import MicIcon from '@mui/icons-material/Mic';
 import StopIcon from '@mui/icons-material/Stop';
@@ -80,6 +82,7 @@ export default function LessonDetailPage() {
   const [recording, setRecording] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [attemptResult, setAttemptResult] = useState<AttemptResult | null>(null);
+  const [ttsVoice, setTtsVoice] = useState<'male' | 'female'>('female');
 
   // Recording
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -228,18 +231,23 @@ export default function LessonDetailPage() {
   const speakPhrase = async (text: string) => {
     try {
       const language = lesson?.language === 'sw' ? 'sw' : 'en-KE';
-      const audioBlob = await generateTTS(text, language);
+      // Fetch audio from the dedicated backend TTS endpoint with gender choice
+      const audioBlob = await generateTTS(text, language, ttsVoice);
+      
+      if (audioBlob.size < 100) {
+        throw new Error("Received empty audio from the completely offline TTS model");
+      }
+      
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
-      audio.play();
-    } catch (err) {
-      console.error('TTS failed, falling back to browser synthesis', err);
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = lesson?.language === 'sw' ? 'sw-KE' : 'en-KE';
-        utterance.rate = 0.8;
-        window.speechSynthesis.speak(utterance);
-      }
+      audio.play().catch(e => {
+        console.error("Browser blocked audio playback:", e);
+        alert("Browser blocked audio playback. Please interact with the page first.");
+      });
+    } catch (err: any) {
+      console.error('TTS generation failed through the backend model', err);
+      // Removed the inbuilt js window.speechSynthesis fallback at user request!
+      alert(`Text-to-Speech generation failed: ${err.message || "Please try again."}`);
     }
   };
 
@@ -354,12 +362,23 @@ export default function LessonDetailPage() {
                 <Typography variant="h6" fontWeight={600}>
                   Phrase {currentPhraseIndex + 1}
                 </Typography>
-                <IconButton
-                  onClick={() => speakPhrase(currentPhrase.phrase_text)}
-                  color="primary"
-                >
-                  <VolumeUpIcon />
-                </IconButton>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <ToggleButtonGroup
+                    value={ttsVoice}
+                    exclusive
+                    onChange={(_, val) => val && setTtsVoice(val)}
+                    size="small"
+                  >
+                    <ToggleButton value="female">Female</ToggleButton>
+                    <ToggleButton value="male">Male</ToggleButton>
+                  </ToggleButtonGroup>
+                  <IconButton
+                    onClick={() => speakPhrase(currentPhrase.phrase_text)}
+                    color="primary"
+                  >
+                    <VolumeUpIcon />
+                  </IconButton>
+                </Box>
               </Box>
 
               <Paper
