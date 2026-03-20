@@ -1,8 +1,13 @@
 // src/utils/api.ts
 
-const RAW_API_URL = process.env.NEXT_PUBLIC_API_URL || "https://sauticare-backend-6rg6.onrender.com";
-const API_BASE_URL = `${RAW_API_URL.replace(/\/$/, '')}/api/v1`;
+const PROD_URL = "https://sauticare-backend-6rg6.onrender.com/api/v1";
 
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.startsWith("http")
+    ? process.env.NEXT_PUBLIC_API_URL
+    : PROD_URL;
+
+    
 /* -------------------------------- AUTH -------------------------------- */
 
 // Allowed options
