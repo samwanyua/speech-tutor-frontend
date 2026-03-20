@@ -259,7 +259,7 @@ export default function Home() {
         <Typography variant="body2" sx={{ color: 'primary', mt: 0.5 }}>
           Made by{' '}
           <a
-            href="https://www.datascienceportfol.io/samuelwanyua"
+            href="https://github.com/samwanyua"
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: '#000', fontWeight: 600, textDecoration: 'none' }}
